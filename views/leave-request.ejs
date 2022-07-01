@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MHMS</title>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      .introduction {
+        width: 100vw;
+        height: 6vh;
+        text-align: center;
+        margin-top: -1%;
+      }
+      label {
+        width: 200px;
+        display: inline-block;
+        font-weight: bold;
+      }
+      input,
+      textarea {
+        background-color: #fff;
+        border-color: #825538;
+        margin-top: 10%;
+        width: 28vw;
+        height: 5vh;
+        position: relative;
+        right: 0;
+      }
+      input:focus {
+        border: 0;
+      }
+
+      .container {
+        width: 63vw;
+        height: 92vh;
+        border-top: 2px solid #9a9a9a;
+        padding-top : 40px;
+        display: flex;
+        justify-content: center;
+        margin-left: 0.5%;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('./layouts/navbar') %> <%- include('./layouts/flash-message') %>
+    <main>
+      <div class="introduction">
+        <h2>Student Leave Request Form</h2>
+      </div>
+      <div class="container">
+        <form method="post" action="/user/leave-request">
+          <label for="reasons">Reason for leave</label>
+          <select name="reason" id="reasons" required>
+            <option value="none" selected disabled hidden>Select an Option</option>
+            <option value="sick">Sick Leave</option>
+            <option value="duty">Duty Leave</option>
+            <option value="weekly">Weekly/Holiday/Vacation</option>
+            <option value="others">Others</option>
+          </select>
+          <br />
+          <div class="text-box">
+            <label textBox.style.display = "block";for="others">Other Reason</label>
+            <textarea name="otherReason" rows="4" cols="50"></textarea>
+            <br/>
+          </div>
+          <label for="leavedate">From date</label>
+          <input type="date" name="fromDate" id="fromDate" required />
+          <br />
+          <label for="returndate">Return date</label>
+          <input type="date" id="returnDate" name="returnDate" required />
+          <br />
+          <input type="submit" value="submit" />
+        </form>
+      </div>
+      <script>
+        const selectBox = document.querySelector("#reasons")
+        const textBox = document.querySelector("body > main > div.container > form > div");
+        textBox.style.display = "none";
+        selectBox.addEventListener('focusout', ()=> {
+          if(selectBox.value == "others"){
+            textBox.style.display = "block";
+          }else {
+            textBox.style.display = "none"; 
+          }
+        });
+      </script>
+<%- include('./layouts/footer') %>

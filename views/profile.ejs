@@ -1,0 +1,25 @@
+<%- include('./layouts/header') %>
+
+<h2><span class="goback" onclick="window.history.back()">←</span> Profile</h2>
+
+<div class="profile">
+  <div>
+    <p class="title">Name</p>
+    <p class="subtitle"><%= person.username %></p>
+  </div>
+  <div>
+    <p class="title">Email</p>
+    <p class="subtitle"><%= person.email %></p>
+  </div>
+  <div>
+    <p class="title">Role</p>
+    <p class="subtitle"><%= person.role %></p>
+  </div>
+  <% if(person.facMail) { %> 
+    <div>
+      <p class="title">Faculty email</p>
+      <p class="subtitle"><%= person.facMail %></p>
+    </div>
+  <% } %> 
+</div>
+<%- include('./layouts/footer') %>

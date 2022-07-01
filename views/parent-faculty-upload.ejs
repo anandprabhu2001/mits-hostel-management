@@ -1,0 +1,13 @@
+<%- include ('layouts/header') %>
+<h4 style="color:red;"><i>The excel sheet should contain muthoot id,name,parent mail,faculty-advisor mail as four columns</i></h4>
+<form action="/admin/upload-parent-faculty-details" method="post" enctype="multipart/form-data">
+    <input
+      type="file"
+      name="pFile"
+      id=""
+      required
+      accept=".xlsx"
+    />
+    <input type="submit" value="Upload" />
+</form>
+<%- include ('layouts/footer') %>

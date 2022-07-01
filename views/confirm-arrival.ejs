@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .con {
+            margin-top : 18px;
+        }
+        .al-box {
+            margin-top: 10px;
+        }
+    </style>
+    <title>MHMS</title>
+  </head>
+  <body>
+    <div class="container-fluid con">
+        <form action="/matron/confirm-arrival" method="post">
+            <label for="semester">Semester</label>
+            <input class="form-control" type="text" id="semester" name="semester"/><br>
+            <input type="submit" value="Submit" class="btn btn-success"/>
+            <a href="/" class="btn btn-primary">Back to home</a>
+          </form>
+          <div class="alert alert-warning alert-dismissible fade show al-box" role="alert">
+          </div>
+          <% if(typeof users !== 'undefined') { %>
+              <h1>List of students who left hostel with leave request</h1>
+               <% users.forEach((user,i) => { %>
+                  <form class="form" action="/matron/send-message" method="post">
+                      <span class="btn btn-dark"><%= i+1 %> </span><input class="btn btn-light" type="text"  readOnly="readOnly" name="username" value="<%= user.username %> ">
+                      <input class="btn btn-light" type="text"  readOnly="readOnly" name="email" value="<%= user.email  %>">
+                      <input class="btn btn-danger" type="submit" value="Inform Parent - Reached Hostel✅">
+                  </form>
+                  <br>
+               <% }) %>
+          <% } %>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script>
+        const forms = document.querySelectorAll(".form");
+        const alertbox = document.querySelector('body > div > div');
+        const button = document.querySelector("#form > input.btn.btn-danger")
+        alertbox.style.visibility = "hidden";
+        if(forms){
+            forms.forEach(form => {
+                form.addEventListener('submit',(e) => {
+                    e.preventDefault();
+                    const payload = new FormData(form);
+                    alertbox.style.visibility = "visible";
+                    alertbox.innerHTML = `<strong>Success!</strong> Messsage has been sent to parent of ${payload.get("username")}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`
+                    fetch('http://localhost:3000/matron/send-message' , {
+                        method : "POST",
+                        body : payload,
+                    })
+                    .then(res => res.json())
+                    .then(data => console.log(data))
+                    .catch(err => console.log(err))
+                })
+            }) 
+        }
+    </script>
+  </body>
+</html>

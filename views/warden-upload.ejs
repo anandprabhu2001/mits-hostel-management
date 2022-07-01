@@ -1,0 +1,13 @@
+<%- include ('layouts/header') %>
+<h4 style="color:red;"><i>The excel sheet should contain warden name,warden mail,hostel as three    columns</i></h4>
+<form action="/admin/upload-warden-details" method="post" enctype="multipart/form-data">
+    <input
+      type="file"
+      name="sFile"
+      id=""
+      required
+      accept=".xlsx"
+    />
+    <input type="submit" value="Upload" />
+</form>
+<%- include ('layouts/footer') %>

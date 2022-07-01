@@ -1,0 +1,31 @@
+<nav>
+  <h2>MITS HOSTEL</h2>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <% if (user) { %>
+    <% if (user.role === 'ADMIN') { %>
+    <li><a href="/user/profile">Profile</a></li>
+    <li><a href="/admin/users">Manage-Users</a></li>
+    <li><a href="/admin/upload-parent-faculty-details">Parent-faculty-details</a></li>
+    <li><a href="/admin/upload-warden-details">Warden-details</a></li>
+    <li><a href="/admin/upload-matron-details">Matron-details</a></li>
+    <% } %>
+    <% if(user.role === 'WARDEN') { %> 
+      <li><a href="/warden/pending-request">Pending-Requests</a></li>
+    <% } %>
+    <% if(user.role === 'MATRON') { %> 
+      <li><a href="/matron/issue-gate-pass">Issue-Gate-Pass</a></li>
+      <li><a href="/matron/issued-passes-today">Today's-Issued-Passes</a></li>
+      <li><a href="/matron/confirm-arrival">Confirm-Arrival</a></li>
+      <li><a href="/matron/uninformed-leaves">Uninformed-Leaves</a></li
+    <% } %>
+    <% if (user.role === 'CLIENT') { %> 
+      <li><a href="/user/leave-request">Request-Leave</a></li>
+    <% } %> 
+    <li><a href="/auth/logout">Logout</a></li>
+    <% } else { %>
+    <li><a href="/auth/register">Register</a></li>
+    <li><a href="/auth/login">Login</a></li>
+    <% } %>
+  </ul>
+</nav>
